@@ -12,14 +12,22 @@ if __name__ == "__main__":
     v, h = result.shape
     n_unknown = v * h
 
-    for i in range(v):
-        combs = get_all_combinations(QUIZ_SAMPLE["v"][i], h)
-        now_pattern = "".join(list(result[:, i]))
-        new_pattern = compare(combs, now_pattern)
-        result[:, i] = list(new_pattern)
-    for i in range(h):
-        combs = get_all_combinations(QUIZ_SAMPLE["h"][i], v)
-        now_pattern = "".join(list(result[i, :]))
-        new_pattern = compare(combs, now_pattern)
-        result[i, :] = list(new_pattern)
+    while True:
+        for i in range(v):
+            combs = get_all_combinations(QUIZ_SAMPLE["v"][i], h)
+            now_pattern = "".join(list(result[:, i]))
+            new_pattern = compare(combs, now_pattern)
+            result[:, i] = list(new_pattern)
+        for i in range(h):
+            combs = get_all_combinations(QUIZ_SAMPLE["h"][i], v)
+            now_pattern = "".join(list(result[i, :]))
+            new_pattern = compare(combs, now_pattern)
+            result[i, :] = list(new_pattern)
+
+        n_unknown_now = np.sum(result == "?")
+        print(n_unknown_now)
+        if n_unknown_now == n_unknown or n_unknown_now < 1:
+            break
+        n_unknown = n_unknown_now
+
     print("\n".join(["".join(list(elem)) for elem in list(result)]))
