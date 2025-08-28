@@ -1,3 +1,5 @@
+import time
+
 import numpy as np
 
 from src.constants import QUIZ_SAMPLE
@@ -8,6 +10,8 @@ def get_size(quiz):
     return len(quiz["h"]), len(quiz["v"])
 
 if __name__ == "__main__":
+    start = time.time()
+
     result = np.full(get_size(QUIZ_SAMPLE), "?", dtype=str)
     v, h = result.shape
     n_unknown = v * h
@@ -31,3 +35,5 @@ if __name__ == "__main__":
         n_unknown = n_unknown_now
 
     print("\n".join(["".join(list(elem)) for elem in list(result)]))
+    end = time.time()
+    print(f"Elapsed: {end - start}")
