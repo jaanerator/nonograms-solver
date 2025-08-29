@@ -16,14 +16,23 @@ if __name__ == "__main__":
     v, h = result.shape
     n_unknown = v * h
 
+    combinations_dict = {"v": [], "h": []}
+    for i in range(v):
+        combs = get_all_combinations(QUIZ_SAMPLE["v"][i], h)
+        combinations_dict["v"].append(combs)
+    for i in range(h):
+        combs = get_all_combinations(QUIZ_SAMPLE["h"][i], v)
+        combinations_dict["h"].append(combs)
+
+    print(n_unknown)
     while True:
         for i in range(v):
-            combs = get_all_combinations(QUIZ_SAMPLE["v"][i], h)
+            combs = combinations_dict["v"][i]
             now_pattern = "".join(list(result[:, i]))
             new_pattern = compare(combs, now_pattern)
             result[:, i] = list(new_pattern)
         for i in range(h):
-            combs = get_all_combinations(QUIZ_SAMPLE["h"][i], v)
+            combs = combinations_dict["h"][i]
             now_pattern = "".join(list(result[i, :]))
             new_pattern = compare(combs, now_pattern)
             result[i, :] = list(new_pattern)
